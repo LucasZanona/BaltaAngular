@@ -8,6 +8,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+    public mode: String = 'list';
     public todos: Todo[] = [];
     public title: String = 'Minhas Tarefas';
     public form: FormGroup;
@@ -25,6 +26,8 @@ export class AppComponent {
      // this.todos.push(new Todo(1, 'Passear com o cachorro',true));
       this.load();
     }
+
+    
 
     add(){
       const title = this.form.controls['title'].value;
@@ -65,7 +68,15 @@ export class AppComponent {
 
     load(){
       const data = localStorage.getItem('todos');
-      const items = JSON.parse(data);
-      this.todos = items;
+      if(data){
+        const items = JSON.parse(data);
+        this.todos = items;
+      }else{
+        this.todos = [];
+      }
+
+    }
+    changeMode(mode: String) {
+      this.mode = mode;
     }
 }
